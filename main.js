@@ -56,7 +56,7 @@ let getData = () => {
             putButton.dataTarget = "#updateScreen";
             putButton.innerText = "Update";
             putButton.addEventListener("click", () => {
-                putDataSetUp(value.id)
+                putDataSetUp(value)
             });
             // add p and button to div then add to listitem then to ul
             div.appendChild(para);
@@ -95,16 +95,19 @@ let postData = (event) => {
     }
 }
 
-let putDataSetUp = (id) => {
-    console.log(id);
+let putDataSetUp = (record) => {
+    console.log(record);
     // open model
-
-    // let request = new XMLHttpRequest();
-    // request.open("PUT", "http://localhost:8081/note/" + id);
-    // request.send();
-    // request.onload = () => {
-    //     getData();
-    // }
+    record.text = "updated";
+    let request = new XMLHttpRequest();
+    request.open("PUT", "http://localhost:8081/note/");
+    request.setRequestHeader("Content-Type", "application/json");
+    let body = JSON.stringify(record);
+    console.log(body);
+    request.send(body);
+    request.onload = () => {
+        getData();
+    }
 }
 
 getData();
